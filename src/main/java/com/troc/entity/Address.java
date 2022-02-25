@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+@Entity
+@Table(name = "address")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,4 +27,9 @@ public class Address {
 
     @Column(name = "street_number")
     private String streetNumber;
+
+    @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.DETACH,
+            CascadeType.REFRESH,CascadeType.MERGE},
+            mappedBy = "address")
+    private Contact contact;
 }

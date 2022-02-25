@@ -1,5 +1,6 @@
 package com.troc.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -23,8 +24,13 @@ public class User {
     @Column(name = "date_of_birth")
     private Date dateOfBirth;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.MERGE})
     @JoinColumn(name = "contact_id")
     private Contact contact;
+
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.MERGE})
+    @JoinColumn(name = "product_id")
+    private Product product;
+
 }
 

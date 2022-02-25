@@ -1,5 +1,6 @@
 package com.troc.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,5 +21,9 @@ public class Product {
     private String description;
 
     @Column(name = "date_of_addition")
-    private Date DateOfAddition;
+    private Date dateOfAddition;
+
+    @JsonIgnore
+    @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.DETACH, CascadeType.REFRESH,CascadeType.MERGE}, mappedBy = "product")
+    private User user;
 }
