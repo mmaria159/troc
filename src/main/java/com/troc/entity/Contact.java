@@ -1,6 +1,5 @@
 package com.troc.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,12 +17,12 @@ public class Contact {
     private String email;
     private String facebook;
 
-    @JsonIgnore
+    //@JsonIgnore
     @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.DETACH, CascadeType.REFRESH,CascadeType.MERGE},
-            mappedBy = "contact")
+            mappedBy = "contact",fetch = FetchType.LAZY)
     private User user;
 
-    @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.DETACH, CascadeType.REFRESH,CascadeType.MERGE})
+    @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.DETACH, CascadeType.REFRESH,CascadeType.MERGE},fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id")
     private Address address;
 
