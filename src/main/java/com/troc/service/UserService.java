@@ -5,12 +5,12 @@ import com.troc.entity.User;
 import java.util.List;
 
 public interface UserService {
-    public List<User> getAllUsers();
+    List<User> findAllUsers();
 
-    public void saveUser(User user);
+    User saveUser(User user);
 
-    public User getUser(long id);
+    User findUserById(Long id);
 
-    public void deleteUser(long id);
+    Long deleteUserById(Long id);
 
 }
