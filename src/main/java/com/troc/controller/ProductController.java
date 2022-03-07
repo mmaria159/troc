@@ -32,11 +32,11 @@ public class ProductController {
         return new ResponseEntity<>(productService.saveProduct(product), HttpStatus.OK);
     }
 
-//    @PutMapping
-//    public Product updateProduct(@RequestBody Product product) {
-//        productService.saveProduct(product);
-//        return product;
-//    }
+    @PutMapping
+    public Product updateProduct(@RequestBody Product product) {
+        productService.saveProduct(product);
+        return product;
+    }
 
     @DeleteMapping("/{id}")
     public Long deleteProductById(@PathVariable Long id) {

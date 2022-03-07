@@ -1,15 +1,16 @@
 package com.troc.service;
 
+import com.troc.dto.UserDTO;
 import com.troc.entity.User;
 
 import java.util.List;
 
 public interface UserService {
-    List<User> findAllUsers();
+    List<UserDTO> findAllUsers();
 
-    User saveUser(User user);
+   // UserDTO saveUser(User user);
 
-    User findUserById(Long id);
+    UserDTO findUserById(Long id);
 
     Long deleteUserById(Long id);
 
