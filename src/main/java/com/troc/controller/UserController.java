@@ -1,6 +1,7 @@
 package com.troc.controller;
 
 import com.troc.dto.UserDTO;
+import com.troc.dto.UserDetailsDTO;
 import com.troc.entity.User;
 import com.troc.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -12,8 +13,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/users")
-//@CrossOrigin(origins = "http://localhost:3001")
+@RequestMapping("/users")
 public class UserController {
     private final UserService userService;
 
@@ -24,8 +24,9 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
-        return new ResponseEntity<>(userService.findUserById(id), HttpStatus.OK);
+    public ResponseEntity<UserDetailsDTO> getUserById(@PathVariable Long id) {
+
+        return new ResponseEntity<>(userService.findDetailedUserById(id), HttpStatus.OK);
     }
 /*
 
