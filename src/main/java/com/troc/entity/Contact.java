@@ -1,13 +1,16 @@
 package com.troc.entity;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "contacts")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class Contact {
     @Id
@@ -16,11 +19,6 @@ public class Contact {
     private Long phone;
     private String email;
     private String facebook;
-
-    //@JsonIgnore
-    @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.DETACH, CascadeType.REFRESH,CascadeType.MERGE},
-            mappedBy = "contact",fetch = FetchType.LAZY)
-    private User user;
 
     @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.DETACH, CascadeType.REFRESH,CascadeType.MERGE},fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id")
