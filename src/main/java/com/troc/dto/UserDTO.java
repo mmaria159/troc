@@ -22,7 +22,6 @@ public class UserDTO {
     private String gender;
     private Date dateOfBirth;
     private Contact contact;
-   // @Property(depth = 1)
     private List<Product> products;
 
 }
