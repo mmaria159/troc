@@ -2,6 +2,8 @@ package com.troc.controller;
 
 import com.troc.dto.UserDTO;
 import com.troc.dto.UserDetailsDTO;
+import com.troc.entity.Contact;
+import com.troc.entity.Product;
 import com.troc.entity.User;
 import com.troc.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -46,19 +48,18 @@ public class UserController {
         return new ResponseEntity<>(userService.deleteUserById(id), HttpStatus.OK);
     }
 
-   /* @PostMapping("/{id}/addContact")
+    @PostMapping("/{id}/addContact")
     public void addContactToUser(@PathVariable Long id, @RequestBody Contact contact) {
-        User userFromDb = userService.findUserById(id);
+        UserDTO userFromDb = userService.findUserById(id);
         userFromDb.setContact(contact);
         userService.saveUser(userFromDb);
     }
 
     @PostMapping("/{id}/addProduct")
     public void addProductToUser(@PathVariable Long id, @RequestBody Product product) {
-        User userFromDb = userService.findUserById(id);
+        UserDTO userFromDb = userService.findUserById(id);
         userFromDb.addProduct(product);
         userService.saveUser(userFromDb);
     }
-*/
 
 }

@@ -9,7 +9,7 @@ import java.util.List;
 public interface UserService {
     List<UserDTO> findAllUsers();
 
-    // UserDTO saveUser(User user);
+    void saveUser(UserDTO userDTO);
 
     UserDTO findUserById(Long id);
 

@@ -3,49 +3,43 @@ package com.troc.service.impl;
 import com.troc.dto.UserDTO;
 import com.troc.dto.UserDetailsDTO;
 import com.troc.exceptions.UserNotFoundException;
+import com.troc.mapper.UserMapper;
 import com.troc.repository.UserRepository;
 import com.troc.entity.User;
 import com.troc.service.UserService;
-import lombok.RequiredArgsConstructor;
-import org.indigo.dtomapper.providers.specification.Mapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
         this.userRepository = userRepository;
+        this.userMapper = userMapper;
     }
 
-
-  /*  @Override
-    public List<UserDTO> findAllUsers() {
-        return (List<UserDTO>) userRepository.findAll().stream().map(user -> mapper.map(user, UserDTO.class));
-    }*/
-/*
     @Override
-    public UserDTO saveUser(User user) {
-        return userRepository.save(user);
-    }*/
+    public void saveUser(UserDTO userDTO) {
+        userRepository.save(userMapper.dtoToUser(userDTO));
+    }
 
+    @Override
+    public List<UserDTO> findAllUsers() {
+        //////de lucru
+        List<User> users = new ArrayList<>(userRepository.findAll());
+        return userMapper.userToUserDTO(users);
+    }
 
     public UserDTO findUserById(Long id) {
         User user = userRepository.getById(id);
         if (user == null) {
             throw new UserNotFoundException("User not found");
         }
-
-        UserDTO userDTO = new UserDTO();
-        userDTO.setId(user.getId());
-        userDTO.setFirstName(user.getFirstName());
-        userDTO.setLastName(user.getLastName());
-        userDTO.setGender(user.getGender());
-        userDTO.setDateOfBirth(user.getDateOfBirth());
-        return userDTO;
+        return userMapper.userToUserDTO(user);
     }
 
     @Override
@@ -54,17 +48,7 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             throw new UserNotFoundException("User not found");
         }
-        UserDetailsDTO userDetails = new UserDetailsDTO();
-        userDetails.setId(user.getId());
-        userDetails.setFirstName(user.getFirstName());
-        if (user.getContact() != null) {
-            userDetails.setEmail(user.getContact().getEmail());
-            userDetails.setFacebook(user.getContact().getFacebook());
-            if (user.getContact().getAddress() != null) {
-                userDetails.setCountry(user.getContact().getAddress().getCountry());
-            }
-        }
-        return userDetails;
+        return userMapper.userDetailsToUserDetailsDTO(user);
     }
 
     @Override
