@@ -19,7 +19,6 @@ public class Address {
     private String village;
     @Column(name = "postal_code")
     private String postalCode;
-    private String region;
 
     @Column(name = "street_name")
     private String streetName;
