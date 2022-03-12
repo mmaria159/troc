@@ -1,6 +1,5 @@
 package com.troc.entity;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -36,9 +35,7 @@ public class User {
     private List<Product> products;
 
     public void addProduct(Product product) {
-        if (products == null) {
-            products = new ArrayList<>();
-        }
+        if (products == null) products = new ArrayList<>();
         product.setUser(this);
         products.add(product);
     }

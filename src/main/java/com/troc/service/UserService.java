@@ -1,7 +1,8 @@
 package com.troc.service;
 
 import com.troc.dto.UserDTO;
-import com.troc.dto.UserDetailsDTO;
+import com.troc.entity.Contact;
+import com.troc.entity.Product;
 import com.troc.entity.User;
 
 import java.util.List;
@@ -9,11 +10,15 @@ import java.util.List;
 public interface UserService {
     List<UserDTO> findAllUsers();
 
-    void saveUser(UserDTO userDTO);
+    UserDTO saveUser(User user);
 
-    UserDTO findUserById(Long id);
+    UserDTO addProductToUser(Long userID, Product product);
 
-    UserDetailsDTO findDetailedUserById(Long id);
+    UserDTO addContactToUser(Long id, Contact contact);
+
+    UserDTO findUserDTOById(Long id);
+
+    User findUserById(Long id);
 
     Long deleteUserById(Long id);
 

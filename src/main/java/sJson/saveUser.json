@@ -1,0 +1,9 @@
+{
+  "url": "localhost:8080/api/v1/users",
+  "firstName": "Popescu",
+  "lastName": "Vasile",
+  "username": "vasile.popescu",
+  "password": "asdfhgh",
+  "gender": "f"
+}
+
