@@ -33,15 +33,15 @@ public class User {
     private String firstName;
     private String lastName;
 
-    @NotBlank
+   // @NotBlank
     @Size(max = 20)
     private String username;
 
-    @NotBlank
+    //@NotBlank
     @Size(max = 120)
     private String password;
 
-    @NotBlank
+   // @NotBlank
     @Size(max = 50)
     @Email
     private String email;
@@ -66,10 +66,13 @@ public class User {
     public User() {
     }
 
-
-    public User(String username, String email, String encode) {
-
+    public User(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
     }
+
+
 
     public void addProduct(Product product) {
         if (products == null) products = new ArrayList<>();

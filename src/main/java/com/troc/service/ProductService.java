@@ -1,11 +1,12 @@
 package com.troc.service;
 
+import com.troc.dto.ProductDTO;
 import com.troc.entity.Product;
 
 import java.util.List;
 
 public interface ProductService {
-    List<Product> findAllProducts();
+    List<ProductDTO> findAllProducts();
 
     Product findProduct(Long id);
 

@@ -1,9 +1,11 @@
 package com.troc.controller;
 
+import com.troc.dto.ProductDTO;
 import com.troc.entity.Product;
 import com.troc.service.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,11 +20,13 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Product>> findAllProducts() {
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    public ResponseEntity<List<ProductDTO>> findAllProducts() {
         return new ResponseEntity<>(productService.findAllProducts(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public Product findProduct(@PathVariable Long id) {
         return productService.findProduct(id);
     }

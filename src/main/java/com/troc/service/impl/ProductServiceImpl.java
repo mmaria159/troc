@@ -1,7 +1,9 @@
 package com.troc.service.impl;
 
+import com.troc.dto.ProductDTO;
 import com.troc.entity.Product;
 import com.troc.exceptions.ProductNotFoundException;
+import com.troc.mapper.ProductMapper;
 import com.troc.repository.ProductRepository;
 import com.troc.service.ProductService;
 import org.springframework.stereotype.Service;
@@ -12,15 +14,18 @@ import java.util.Optional;
 @Service
 public class ProductServiceImpl implements ProductService {
 
+    private final ProductMapper productMapper;
+
     private final ProductRepository productRepository;
 
-    public ProductServiceImpl(ProductRepository productRepository) {
+    public ProductServiceImpl(ProductMapper productMapper, ProductRepository productRepository) {
+        this.productMapper = productMapper;
         this.productRepository = productRepository;
     }
 
     @Override
-    public List<Product> findAllProducts() {
-        return productRepository.findAll();
+    public List<ProductDTO> findAllProducts() {
+       return productMapper.productToProductDTO(productRepository.findAll());
     }
 
     @Override
