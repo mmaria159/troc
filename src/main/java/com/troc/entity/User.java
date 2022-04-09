@@ -1,8 +1,8 @@
 package com.troc.entity;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,7 +23,6 @@ import java.util.List;
         })
 @Getter
 @Setter
-//@NoArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,15 +32,15 @@ public class User {
     private String firstName;
     private String lastName;
 
-   // @NotBlank
+    @NotBlank
     @Size(max = 20)
     private String username;
 
-    //@NotBlank
+    @NotBlank
     @Size(max = 120)
     private String password;
 
-   // @NotBlank
+    @NotBlank
     @Size(max = 50)
     @Email
     private String email;
@@ -51,7 +50,7 @@ public class User {
     private Date dateOfBirth;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(  name = "user_roles",
+    @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
@@ -72,7 +71,18 @@ public class User {
         this.password = password;
     }
 
-
+    public User(String firstName, String lastName, String username, String password, String email, String gender, Date dateOfBirth, Set<Role> roles, Contact contact, List<Product> products) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.gender = gender;
+        this.dateOfBirth = dateOfBirth;
+        this.roles = roles;
+        this.contact = contact;
+        this.products = products;
+    }
 
     public void addProduct(Product product) {
         if (products == null) products = new ArrayList<>();
