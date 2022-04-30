@@ -12,4 +12,5 @@ public class ContactDTO {
     private Long phone;
     private String email;
     private String facebook;
+    private AddressDTO addressDTO;
 }

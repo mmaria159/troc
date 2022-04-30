@@ -35,10 +35,18 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
     }
 
     @ExceptionHandler(AlreadyExistsException.class)
-    public final ResponseEntity<Object> handleAlreadyExistsExceptionException(Exception ex, WebRequest request) {
+    public final ResponseEntity<Object> handleAlreadyExistsException(Exception ex, WebRequest request) {
         ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription(false));
         return new ResponseEntity(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(ProductNotFoundException.class)
+    public final ResponseEntity<Object> handleProductNotFoundException(Exception ex, WebRequest request) {
+        ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription(false));
+        return new ResponseEntity(exceptionResponse, HttpStatus.BAD_REQUEST);
+    }
+
+
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {

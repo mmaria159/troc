@@ -14,4 +14,5 @@ public class UserDTO {
     private String lastName;
     private String gender;
     private Date dateOfBirth;
+    private Long contactId;
 }

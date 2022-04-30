@@ -1,5 +1,6 @@
 package com.troc.mapper;
 
+import com.troc.dto.AddressDTO;
 import com.troc.dto.ContactDTO;
 import com.troc.entity.Contact;
 import org.springframework.stereotype.Component;
@@ -14,6 +15,15 @@ public class ContactMapper {
         contactDTO.setPhone(contact.getPhone());
         contactDTO.setEmail(contact.getEmail());
         contactDTO.setFacebook(contact.getFacebook());
+
+        AddressDTO addressDTO = AddressDTO.builder().postalCode(contact.getAddress().getPostalCode())
+                .streetName(contact.getAddress().getStreetName())
+                .streetNumber(contact.getAddress().getStreetNumber())
+                .town(contact.getAddress().getTown())
+                .village(contact.getAddress().getVillage())
+                .build();
+
+        contactDTO.setAddressDTO(addressDTO);
 
         return contactDTO;
     }

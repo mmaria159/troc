@@ -51,6 +51,7 @@ public class UserController {
         return new ResponseEntity<>(userService.deleteUserById(id), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @PostMapping("/{id}/addContact")
     public ResponseEntity<UserDTO> addContactToUser(@PathVariable Long id, @RequestBody Contact contact) {
         UserDTO savedUserDTO = userService.addContactToUser(id, contact);
@@ -58,7 +59,7 @@ public class UserController {
         return ResponseEntity.created(location).build();
 
     }
-
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @PostMapping("/{id}/addProduct")
     public ResponseEntity<UserDTO> addProductToUser(@PathVariable Long id, @RequestBody Product product) {
         UserDTO savedUserDTO = userService.addProductToUser(id, product);
