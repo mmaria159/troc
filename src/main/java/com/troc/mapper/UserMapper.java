@@ -19,6 +19,7 @@ public class UserMapper {
         userDTO.setLastName(user.getLastName());
         userDTO.setGender(user.getGender());
         userDTO.setDateOfBirth(user.getDateOfBirth());
+        if (user.getContact() != null)
         userDTO.setContactId(user.getContact().getId());
 
         return userDTO;

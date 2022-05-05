@@ -16,8 +16,11 @@ public class ContactMapper {
         contactDTO.setEmail(contact.getEmail());
         contactDTO.setFacebook(contact.getFacebook());
 
-        AddressDTO addressDTO = AddressDTO.builder().postalCode(contact.getAddress().getPostalCode())
+        AddressDTO addressDTO = AddressDTO.builder()
+                .id(contact.getAddress().getId())
+                .postalCode(contact.getAddress().getPostalCode())
                 .streetName(contact.getAddress().getStreetName())
+                .country(contact.getAddress().getCountry())
                 .streetNumber(contact.getAddress().getStreetNumber())
                 .town(contact.getAddress().getTown())
                 .village(contact.getAddress().getVillage())

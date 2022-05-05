@@ -9,7 +9,6 @@ import com.troc.repository.ContactRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Optional;
 
 @Service
 public class ContactService {
@@ -24,10 +23,8 @@ public class ContactService {
 
     @Transactional
     public ContactDTO findContact(Long id) {
-        Optional<Contact> contact = contactRepository.findById(id);
-        if (contact.isEmpty()) {
-            throw new ProductNotFoundException("Contact not found by id = " + id);
-        }
-        return contactMapper.contactToContactDTO(contact.get());
+        Contact contact = contactRepository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException("Contact not found by id = " + id));
+        return contactMapper.contactToContactDTO(contact);
     }
 }

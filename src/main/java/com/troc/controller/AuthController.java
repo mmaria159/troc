@@ -11,6 +11,8 @@ import com.troc.repository.RoleRepository;
 import com.troc.repository.UserRepository;
 import com.troc.security.jwt.JwtUtils;
 import com.troc.security.services.UserDetailsImpl;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -36,6 +38,9 @@ public class AuthController {
     private final PasswordEncoder encoder;
     private final JwtUtils jwtUtils;
 
+    @Value("${bezkoder.app.jwtExpirationMs}")
+    private int jwtExpirationMs;
+
     public AuthController(AuthenticationManager authenticationManager, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder encoder, JwtUtils jwtUtils) {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
@@ -50,18 +55,23 @@ public class AuthController {
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtils.generateJwtToken(authentication);
+        String token = jwtUtils.generateJwtToken(authentication);
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
 
-        return ResponseEntity.ok(new JwtResponse(jwt,
-                userDetails.getId(),
-                userDetails.getUsername(),
-                userDetails.getEmail(),
-                roles));
+        JwtResponse jwtResponse = JwtResponse.builder()
+                .id(userDetails.getId())
+                .token(token)
+                .email(userDetails.getEmail())
+                .username(userDetails.getUsername())
+                .roles(roles)
+                .expirationTime(jwtExpirationMs)
+                .build();
+
+        return ResponseEntity.ok(jwtResponse);
     }
 
     @PostMapping("/signup")
