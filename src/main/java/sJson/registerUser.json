@@ -1,0 +1,15 @@
+"url" : "http://localhost:8090/api/v1/auth/signup"
+{
+  "firstName":"AAA",
+  "lastName":"BBB",
+  "username":"maria155",
+  "password":"maria123",
+  "email":"macoveimaria515@gmail.com",
+  "gender":"M",
+  "dateOfBirth":"1999-02-15",
+  "roles":[{
+    "name":"ROLE_ADMIN"
+  }],
+  "contact":null,
+  "products":null
+}
