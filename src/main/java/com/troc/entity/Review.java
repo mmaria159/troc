@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Data
+@Entity
+@Table(name = "reviews")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Review {
@@ -14,5 +16,6 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String comment;
-    private int stars;
+
+
 }
