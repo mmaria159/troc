@@ -1,7 +1,9 @@
 package com.troc.dto;
 
+import com.troc.entity.Product;
 import lombok.*;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,4 +17,5 @@ public class UserDTO {
     private String gender;
     private Date dateOfBirth;
     private Long contactId;
+    private List<Product> products;
 }

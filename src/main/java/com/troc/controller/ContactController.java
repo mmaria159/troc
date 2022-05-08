@@ -29,6 +29,10 @@ public class ContactController {
     @PreAuthorize("hasRole('USER')  or hasRole('ADMIN')")
     public ResponseEntity<ContactDTO> findContact(@PathVariable("userId") Long id) {
         Long contactId = userService.findUserDTOById(id).getContactId();
-        return new ResponseEntity<>(contactService.findContact(contactId), HttpStatus.OK);
+        ContactDTO contact = new ContactDTO();
+        if (contactId != null) {
+            contact = contactService.findContact(contactId);
+        }
+        return new ResponseEntity<>(contact, HttpStatus.OK);
     }
 }

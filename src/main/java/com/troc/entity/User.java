@@ -18,8 +18,8 @@ import java.util.List;
 @Entity
 @Table(name = "users",
         uniqueConstraints = {
-                @UniqueConstraint(columnNames = "username"),
-                @UniqueConstraint(columnNames = "email")
+                @UniqueConstraint(columnNames = "username")
+//                @UniqueConstraint(columnNames = "email")
         })
 @Getter
 @Setter
@@ -40,8 +40,8 @@ public class User {
     @Size(max = 120)
     private String password;
 
-    @NotBlank
-    @Size(max = 50)
+//    @NotBlank
+//    @Size(max = 50)
     @Email
     private String email;
 

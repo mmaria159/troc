@@ -2,12 +2,15 @@ package com.troc.controller;
 
 import com.troc.dto.ProductDTO;
 import com.troc.entity.Product;
+import com.troc.exceptions.ProductNotFoundException;
 import com.troc.service.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -37,7 +40,7 @@ public class ProductController {
     }
 
     @PutMapping
-    public Product updateProduct(@RequestBody Product product) {
+    public Product updateProduct(@RequestBody Product product) throws ProductNotFoundException, IOException {
         productService.saveProduct(product);
         return product;
     }
