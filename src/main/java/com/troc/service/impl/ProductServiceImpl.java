@@ -41,7 +41,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product saveProduct(Product product) throws IOException {
+    public Product saveProduct(Product product) {
         return null;
     }
 
@@ -67,13 +67,6 @@ public class ProductServiceImpl implements ProductService {
         productFromDb.setPreviewImageId(productFromDb.getImages().get(0).getId());
         return productRepository.save(product);
     }
-
-/*
-    @Override
-    public Product saveProduct(Product product) {
-        return productRepository.save(product);
-    }*/
-
 
     @Override
     public void deleteProductById(Long id) {

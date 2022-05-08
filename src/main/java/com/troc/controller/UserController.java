@@ -24,12 +24,13 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public ResponseEntity<List<UserDTO>> findAllUsers() {
         return new ResponseEntity<>(userService.findAllUsers(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public ResponseEntity<UserDTO> findUserDTOById(@PathVariable Long id) {
         return new ResponseEntity<>(userService.findUserDTOById(id), HttpStatus.OK);
     }
@@ -51,7 +52,7 @@ public class UserController {
         return new ResponseEntity<>(userService.deleteUserById(id), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @PostMapping("/{id}/addContact")
     public ResponseEntity<UserDTO> addContactToUser(@PathVariable Long id, @RequestBody Contact contact) {
         UserDTO savedUserDTO = userService.addContactToUser(id, contact);
@@ -59,11 +60,17 @@ public class UserController {
         return ResponseEntity.created(location).build();
 
     }
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @PostMapping("/{id}/addProduct")
     public ResponseEntity<UserDTO> addProductToUser(@PathVariable Long id, @RequestBody Product product) {
         UserDTO savedUserDTO = userService.addProductToUser(id, product);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(savedUserDTO.getId()).toUri();
         return ResponseEntity.created(location).build();
+    }
+
+    @GetMapping("/{id}/products")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public ResponseEntity<List<Product>> getUserProducts(@PathVariable Long id) {
+        return new ResponseEntity<>(userService.findUserDTOById(id).getProducts(), HttpStatus.OK);
     }
 }
