@@ -27,7 +27,7 @@ public class UserMapper {
         userDTO.setContactId(user.getContact().getId());
         for (Product product : user.getProducts()) {
             product.setUser(null);
-            product.setImages(null);
+           // product.setImages(null);
             userProducts.add(product);
         }
         userDTO.setProducts(userProducts);

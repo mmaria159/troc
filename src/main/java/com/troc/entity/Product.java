@@ -20,17 +20,25 @@ public class Product {
     private Long id;
     private String name;
     private String description;
-
-    @Column(name = "date_of_addition")
-    private Date dateOfAddition;
+    private String moreInformation;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,
-            mappedBy = "product")
-    private List<Image> images = new ArrayList<>();
-    private Long previewImageId;
+
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "region_id")
+    private Region region;
+
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,
+//            mappedBy = "product")
+//    private List<Image> images = new ArrayList<>();
+//    private Long previewImageId;
     private LocalDateTime dateOfCreated;
 
     @PrePersist
@@ -39,10 +47,10 @@ public class Product {
     }
 
 
-    public void addImageToProduct(Image image) {
-        image.setProduct(this);
-        images.add(image);
-    }
+//    public void addImageToProduct(Image image) {
+//        image.setProduct(this);
+//        images.add(image);
+//    }
 
 
 }
