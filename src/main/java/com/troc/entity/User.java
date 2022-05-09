@@ -6,8 +6,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -61,28 +59,6 @@ public class User {
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.MERGE}, mappedBy = "user", fetch = FetchType.EAGER)
     private List<Review> reviews;
-
-    public User() {
-    }
-
-    public User(String username, String email, String password) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
-    }
-
-    public User(String firstName, String lastName, String username, String password, String email, String gender, Date dateOfBirth, Set<Role> roles, Contact contact, List<Product> products) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.gender = gender;
-        this.dateOfBirth = dateOfBirth;
-        this.roles = roles;
-        this.contact = contact;
-        this.products = products;
-    }
 
     public void addProduct(Product product) {
         if (products == null) products = new ArrayList<>();

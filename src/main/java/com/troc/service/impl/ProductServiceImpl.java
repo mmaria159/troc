@@ -1,6 +1,8 @@
 package com.troc.service.impl;
 
 import com.troc.dto.ProductDTO;
+import com.troc.entity.ECategory;
+import com.troc.entity.ERegion;
 import com.troc.entity.Product;
 import com.troc.exceptions.ProductNotFoundException;
 import com.troc.exceptions.UserNotFoundException;

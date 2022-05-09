@@ -13,7 +13,7 @@ public interface ProductService {
 
     List<ProductDTO> findAllProducts(String orderBy, Sort.Direction direction);
 
-    Product findProduct(Long id);
+    ProductDTO findProduct(Long id);
 
     Product saveProduct(Product product);
 

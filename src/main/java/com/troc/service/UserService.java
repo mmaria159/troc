@@ -13,7 +13,7 @@ public interface UserService {
 
     UserDTO saveUser(User user);
 
-    UserDTO addProductToUser(Long userID, Product product);
+    void addProductToUser(Long userID, Product product);
   
     UserDTO addReviewToUser(Long userID, Review review);
 
