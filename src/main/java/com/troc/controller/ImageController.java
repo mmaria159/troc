@@ -13,6 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/images")
@@ -31,13 +33,28 @@ public class ImageController {
                 .body(new InputStreamResource(new ByteArrayInputStream(image.getBytes())));
     }
 
-    @PostMapping
-    public ResponseEntity<Image> saveImage(@RequestParam MultipartFile file1) throws IOException {
-        Image image = null;
-        if (file1.getSize() != 0) {
-            image = imageService.toImageEntity(file1);
-            image.setPreviewImage(true);
+//    @PostMapping(path = "/requestpart/employee", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+//    public ResponseEntity<Image> saveImage(@RequestParam MultipartFile file1) throws IOException {
+//        Image image = null;
+//        if (file1.getSize() != 0) {
+//            image = imageService.toImageEntity(file1);
+//            image.setPreviewImage(true);
+//        }
+//        return new ResponseEntity<>(imageService.saveImage(image), HttpStatus.OK);
+//    }
+
+    @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<List<Image>> saveImage(@RequestPart("files") List<MultipartFile> files) throws IOException {
+        List<Image> images = new ArrayList<>();
+        for (MultipartFile file : files) {
+            if (file.getSize() != 0) {
+                images.add(imageService.toImageEntity(file));
+            }
         }
-        return new ResponseEntity<>(imageService.saveImage(image), HttpStatus.OK);
+//        if (file1.getSize() != 0) {
+//            image = imageService.toImageEntity(file1);
+//            image.setPreviewImage(true);
+//        }
+        return new ResponseEntity<>(imageService.saveImage(images), HttpStatus.OK);
     }
 }
