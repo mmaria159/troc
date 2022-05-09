@@ -7,37 +7,29 @@ import com.troc.exceptions.ProductNotFoundException;
 import com.troc.mapper.ProductMapper;
 import com.troc.repository.ProductRepository;
 import com.troc.service.ProductService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
     private final ProductMapper productMapper;
-
     private final ProductRepository productRepository;
-
-    public ProductServiceImpl(ProductMapper productMapper, ProductRepository productRepository) {
-        this.productMapper = productMapper;
-        this.productRepository = productRepository;
-    }
 
     @Override
     public List<ProductDTO> findAllProducts() {
-       return productMapper.productToProductDTO(productRepository.findAll());
+        return productMapper.productToProductDTO(productRepository.findAll());
     }
 
     @Override
-    public Product findProduct(Long id) {
-        Optional<Product> product = productRepository.findById(id);
-        if (product.isEmpty()) {
-            throw new ProductNotFoundException("Product not found by id = " + id);
-        }
-        return product.get();
+    public ProductDTO findProduct(Long id) {
+        return productMapper.productToProductDTO(productRepository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException("Product not found by id: " + id)));
     }
 
     @Override

@@ -89,6 +89,5 @@ public class User {
         product.setUser(this);
         products.add(product);
     }
-
 }
 
