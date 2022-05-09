@@ -15,11 +15,16 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class ProductDTO {
     private Long id;
+  
     private String name;
+  
     private String description;
+
     @JsonFormat(pattern="yyyy-MM-dd")
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     private LocalDateTime dateOfCreated;
+  
     private Category category;
+  
     private Region region;
 }
