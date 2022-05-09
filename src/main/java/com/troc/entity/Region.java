@@ -16,7 +16,7 @@ public class Region {
 
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
-    private ERegion region;
+    private ERegion name;
 
     public Region() {
     }

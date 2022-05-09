@@ -1,7 +1,6 @@
 package com.troc.service.impl;
 
 import com.troc.dto.ProductDTO;
-import com.troc.entity.Image;
 import com.troc.entity.Product;
 import com.troc.exceptions.ProductNotFoundException;
 import com.troc.mapper.ProductMapper;
@@ -9,9 +8,6 @@ import com.troc.repository.ProductRepository;
 import com.troc.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -34,7 +30,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product saveProduct(Product product) {
-        return null;
+        return productRepository.save(product);
     }
 
 //    public Product saveProduct(Product product, MultipartFile file1, MultipartFile file2, MultipartFile file3) throws ProductNotFoundException, IOException {

@@ -63,7 +63,7 @@ public class UserController {
 
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @PostMapping("/{id}/addProduct")
-    public ResponseEntity<UserDTO> addProductToUser(@PathVariable Long id, @RequestBody Product product) {
+    public ResponseEntity<?> addProductToUser(@PathVariable Long id, @RequestBody Product product) {
         userService.addProductToUser(id, product);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(id).toUri();
         return ResponseEntity.created(location).build();

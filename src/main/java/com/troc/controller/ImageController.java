@@ -2,7 +2,6 @@ package com.troc.controller;
 
 import com.troc.entity.Image;
 import com.troc.repository.ImageRepository;
-import com.troc.service.ImageService;
 import com.troc.service.impl.ImageServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
@@ -14,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-
 
 @RestController
 @RequestMapping("/api/v1/images")

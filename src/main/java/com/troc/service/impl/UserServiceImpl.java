@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -34,7 +33,8 @@ public class UserServiceImpl implements UserService {
     public void addProductToUser(Long id, Product product) {
         User userFromDb = findUserById(id);
         userFromDb.addProduct(product);
-        productService.saveProduct(product);
+        userRepository.save(userFromDb);
+//        productService.saveProduct(product);
     }
 
     @Override

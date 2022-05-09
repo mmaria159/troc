@@ -1,6 +1,7 @@
 package com.troc.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import javax.persistence.*;
 @Table(name = "categories")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,8 +17,5 @@ public class Category {
 
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
-    private ECategory category;
-
-    public Category() {
-    }
+    private ECategory name;
 }
