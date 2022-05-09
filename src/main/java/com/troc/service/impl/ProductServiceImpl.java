@@ -37,10 +37,10 @@ public class ProductServiceImpl implements ProductService {
         return null;
     }
 
-    public Product saveProduct(Product product, MultipartFile file1, MultipartFile file2, MultipartFile file3) throws ProductNotFoundException, IOException {
-        Image image1;
-        Image image2;
-        Image image3;
+//    public Product saveProduct(Product product, MultipartFile file1, MultipartFile file2, MultipartFile file3) throws ProductNotFoundException, IOException {
+//        Image image1;
+//        Image image2;
+//        Image image3;
 //        if (file1.getSize() != 0) {
 //            image1 = toImageEntity(file1);
 //            image1.setPreviewImage(true);
@@ -54,11 +54,11 @@ public class ProductServiceImpl implements ProductService {
 //            image3 = toImageEntity(file3);
 //            product.addImageToProduct(image3);
 //        }
-
-        Product productFromDb = productRepository.save(product);
-        productFromDb.setPreviewImageId(productFromDb.getImages().get(0).getId());
-        return productRepository.save(product);
-    }
+//
+//        Product productFromDb = productRepository.save(product);
+//        productFromDb.setPreviewImageId(productFromDb.getImages().get(0).getId());
+//        return productRepository.save(product);
+//    }
 
     @Override
     public void deleteProductById(Long id) {

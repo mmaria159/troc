@@ -21,14 +21,20 @@ public class Product {
     private Long id;
     private String name;
     private String description;
+    private String moreInformation;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,
-            mappedBy = "product")
-    private List<Image> images = new ArrayList<>();
-    private Long previewImageId;
+
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "region_id")
+    private Region region;
+
     @JsonFormat(pattern="yyyy-MM-dd")
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     private LocalDateTime dateOfCreated;
@@ -37,7 +43,6 @@ public class Product {
     private void init() {
         dateOfCreated = LocalDateTime.now();
     }
-
 
     public void addImageToProduct(Image image) {
         image.setProduct(this);
