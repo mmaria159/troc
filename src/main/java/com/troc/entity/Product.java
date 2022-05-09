@@ -1,11 +1,12 @@
 package com.troc.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -21,9 +22,6 @@ public class Product {
     private String name;
     private String description;
 
-    @Column(name = "date_of_addition")
-    private Date dateOfAddition;
-
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -31,6 +29,8 @@ public class Product {
             mappedBy = "product")
     private List<Image> images = new ArrayList<>();
     private Long previewImageId;
+    @JsonFormat(pattern="yyyy-MM-dd")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     private LocalDateTime dateOfCreated;
 
     @PrePersist
@@ -43,6 +43,4 @@ public class Product {
         image.setProduct(this);
         images.add(image);
     }
-
-
 }
