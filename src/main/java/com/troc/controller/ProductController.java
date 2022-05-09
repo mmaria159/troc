@@ -1,14 +1,16 @@
 package com.troc.controller;
 
 import com.troc.dto.ProductDTO;
+import com.troc.entity.ECategory;
+import com.troc.entity.ERegion;
 import com.troc.entity.Product;
 import com.troc.exceptions.ProductNotFoundException;
 import com.troc.service.ProductService;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -28,6 +30,31 @@ public class ProductController {
         return new ResponseEntity<>(productService.findAllProducts(), HttpStatus.OK);
     }
 
+    @GetMapping("/sort")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public ResponseEntity<List<ProductDTO>> findAllSortingProducts(
+            @RequestParam("orderBy") String orderBy, @RequestParam("direction") Sort.Direction direction) {
+        return new ResponseEntity<>(productService.findAllProducts(orderBy, direction), HttpStatus.OK);
+    }
+
+    @GetMapping("/category")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public ResponseEntity<List<Product>> findProductsByCategoryName(@RequestParam("category") ECategory category) {
+        return new ResponseEntity<>(productService.findProductsByCategoryName(category), HttpStatus.OK);
+    }
+
+    @GetMapping("/region")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public ResponseEntity<List<Product>> findProductsByRegionName(@RequestParam("region") ERegion region) {
+        return new ResponseEntity<>(productService.findProductsByRegionName(region), HttpStatus.OK);
+    }
+
+    @GetMapping("/theNewest")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public ResponseEntity<List<Product>> findNewestProducts(@RequestParam("id") Product id) {
+        return new ResponseEntity<>(productService.findNewestProducts(id), HttpStatus.OK);
+    }
+
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('USER')  or hasRole('ADMIN')")
     public Product findProduct(@PathVariable Long id) {
@@ -35,6 +62,7 @@ public class ProductController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('USER')  or hasRole('ADMIN')")
     public ResponseEntity<Product> saveProduct(@RequestBody Product product) {
         return new ResponseEntity<>(productService.saveProduct(product), HttpStatus.OK);
     }

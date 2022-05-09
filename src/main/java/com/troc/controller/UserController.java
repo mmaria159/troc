@@ -3,6 +3,7 @@ package com.troc.controller;
 import com.troc.dto.UserDTO;
 import com.troc.entity.Contact;
 import com.troc.entity.Product;
+import com.troc.entity.Review;
 import com.troc.entity.User;
 import com.troc.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -64,6 +65,14 @@ public class UserController {
     @PostMapping("/{id}/addProduct")
     public ResponseEntity<UserDTO> addProductToUser(@PathVariable Long id, @RequestBody Product product) {
         UserDTO savedUserDTO = userService.addProductToUser(id, product);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(savedUserDTO.getId()).toUri();
+        return ResponseEntity.created(location).build();
+    }
+
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @PostMapping("/{id}/addReview")
+    public ResponseEntity<UserDTO> addReviewToUser(@PathVariable Long id, @RequestBody Review review) {
+        UserDTO savedUserDTO = userService.addReviewToUser(id, review);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(savedUserDTO.getId()).toUri();
         return ResponseEntity.created(location).build();
     }

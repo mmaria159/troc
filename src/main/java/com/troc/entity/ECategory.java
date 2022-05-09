@@ -1,10 +1,13 @@
 package com.troc.entity;
 
 public enum ECategory {
-    Jucarii,
-    Carti,
-    Haine,
-    Încaltaminte,
-    Mobilier,
-    Donatii
+    JUCARII,
+    CARTI,
+    HAINE,
+    INCALTAMINTE,
+    MOBILIER,
+    SPORT,
+    JOCURI_VIDEO,
+    ACCESORII,
+    INSTRUMENTE_MUZICALE,
 }

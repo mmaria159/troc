@@ -62,6 +62,9 @@ public class User {
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.MERGE}, mappedBy = "user", fetch = FetchType.LAZY)
     private List<Product> products;
 
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.MERGE}, mappedBy = "user", fetch = FetchType.EAGER)
+    private List<Review> reviews;
+
     public User() {
     }
 
@@ -88,6 +91,12 @@ public class User {
         if (products == null) products = new ArrayList<>();
         product.setUser(this);
         products.add(product);
+    }
+
+    public void addReview(Review review) {
+        if (reviews == null) reviews = new ArrayList<>();
+        review.setUser(this);
+        reviews.add(review);
     }
 
 }

@@ -1,16 +1,18 @@
 package com.troc.service.impl;
 
 import com.troc.dto.ProductDTO;
-import com.troc.entity.Image;
-import com.troc.entity.Product;
+import com.troc.entity.*;
 import com.troc.exceptions.ProductNotFoundException;
+import com.troc.exceptions.UserNotFoundException;
 import com.troc.mapper.ProductMapper;
 import com.troc.repository.ProductRepository;
 import com.troc.service.ProductService;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,7 +30,15 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductDTO> findAllProducts() {
-       return productMapper.productToProductDTO(productRepository.findAll());
+        return productMapper.productToProductDTO(productRepository.findAll());
+    }
+
+    @Override
+    public List<ProductDTO> findAllProducts(String orderBy, Sort.Direction direction) {
+        return productMapper
+                .productToProductDTO(productRepository
+                        .findAllSortingProducts(Sort.by(direction, orderBy))
+                        .orElseThrow(()-> new ProductNotFoundException("ERROR")));
     }
 
     @Override
@@ -42,7 +52,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product saveProduct(Product product) {
-        return null;
+
+        return productRepository.save(product);
     }
 
 //    public Product saveProduct(Product product, MultipartFile file1, MultipartFile file2, MultipartFile file3) throws ProductNotFoundException, IOException {
@@ -72,4 +83,27 @@ public class ProductServiceImpl implements ProductService {
     public void deleteProductById(Long id) {
         productRepository.deleteById(id);
     }
+
+    @Override
+    public List<Product> findProductsByCategoryName(ECategory category) {
+        List<Product> products = productRepository.findProductsByCategory(category)
+                .orElseThrow(() -> new ProductNotFoundException("Product not found by category name:" + category));
+        return products;
+    }
+
+    @Override
+    public List<Product> findProductsByRegionName(ERegion region) {
+        List<Product> products = productRepository.findProductsByRegion(region)
+                .orElseThrow(() -> new ProductNotFoundException("Product not found by region name:" + region));
+        return products;
+    }
+
+    @Override
+    public List<Product> findNewestProducts(Product id) {
+        List<Product> products = productRepository.findNewestProducts(id)
+                .orElseThrow(() -> new ProductNotFoundException("Product not found by region name:" + id));
+        return products;
+    }
+
+
 }

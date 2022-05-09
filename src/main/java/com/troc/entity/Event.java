@@ -15,6 +15,8 @@ public class Event {
     private Integer id;
     private String name;
     private String location;
+    private String description;
+    // TODO adauga interesat si particip
 
     public Event() {
     }

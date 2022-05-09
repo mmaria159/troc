@@ -1,13 +1,10 @@
 package com.troc.mapper;
 
-import com.troc.dto.AddressDTO;
 import com.troc.dto.ProductDTO;
-import com.troc.entity.Address;
 import com.troc.entity.Product;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,7 +18,7 @@ public class ProductMapper {
         productDTO.setId(product.getId());
         productDTO.setDescription(product.getDescription());
         productDTO.setName(product.getName());
-        productDTO.setDateOfAddition(new Date());
+//        productDTO.setDateOfAddition(new Date());
 
         return productDTO;
     }
