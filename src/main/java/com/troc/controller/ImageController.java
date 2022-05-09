@@ -33,16 +33,6 @@ public class ImageController {
                 .body(new InputStreamResource(new ByteArrayInputStream(image.getBytes())));
     }
 
-//    @PostMapping(path = "/requestpart/employee", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-//    public ResponseEntity<Image> saveImage(@RequestParam MultipartFile file1) throws IOException {
-//        Image image = null;
-//        if (file1.getSize() != 0) {
-//            image = imageService.toImageEntity(file1);
-//            image.setPreviewImage(true);
-//        }
-//        return new ResponseEntity<>(imageService.saveImage(image), HttpStatus.OK);
-//    }
-
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<List<Image>> saveImage(@RequestPart("files") List<MultipartFile> files) throws IOException {
         List<Image> images = new ArrayList<>();
@@ -51,10 +41,6 @@ public class ImageController {
                 images.add(imageService.toImageEntity(file));
             }
         }
-//        if (file1.getSize() != 0) {
-//            image = imageService.toImageEntity(file1);
-//            image.setPreviewImage(true);
-//        }
         return new ResponseEntity<>(imageService.saveImage(images), HttpStatus.OK);
     }
 }

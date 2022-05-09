@@ -18,7 +18,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
-    private final ProductServiceImpl productService;
     private final UserMapper userMapper;
 
     @Override
@@ -34,7 +33,6 @@ public class UserServiceImpl implements UserService {
         User userFromDb = findUserById(id);
         userFromDb.addProduct(product);
         userRepository.save(userFromDb);
-//        productService.saveProduct(product);
     }
 
     @Override

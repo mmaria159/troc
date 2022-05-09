@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -33,7 +34,10 @@ public class Product {
     @JoinColumn(name = "region_id")
     private Region region;
 
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.MERGE}, mappedBy = "product", fetch = FetchType.EAGER)
+    private List<Image> images;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     private LocalDateTime dateOfCreated;
 

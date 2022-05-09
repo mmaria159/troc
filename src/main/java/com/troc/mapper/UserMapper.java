@@ -1,6 +1,7 @@
 package com.troc.mapper;
 
 import com.troc.dto.UserDTO;
+import com.troc.entity.Image;
 import com.troc.entity.Product;
 import com.troc.entity.User;
 
@@ -24,10 +25,12 @@ public class UserMapper {
         userDTO.setGender(user.getGender());
         userDTO.setDateOfBirth(user.getDateOfBirth());
         if (user.getContact() != null)
-        userDTO.setContactId(user.getContact().getId());
+            userDTO.setContactId(user.getContact().getId());
         for (Product product : user.getProducts()) {
             product.setUser(null);
-           // product.setImages(null);
+            for (Image image : product.getImages()) {
+                image.setProduct(null);
+            }
             userProducts.add(product);
         }
         userDTO.setProducts(userProducts);

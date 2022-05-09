@@ -4,22 +4,19 @@ import com.troc.dto.ProductDTO;
 import com.troc.entity.Product;
 import com.troc.exceptions.ProductNotFoundException;
 import com.troc.service.ProductService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/products")
+@RequiredArgsConstructor
 public class ProductController {
     private final ProductService productService;
-
-    public ProductController(ProductService productService) {
-        this.productService = productService;
-    }
 
     @GetMapping
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
@@ -39,7 +36,7 @@ public class ProductController {
     }
 
     @PutMapping
-    public Product updateProduct(@RequestBody Product product) throws ProductNotFoundException, IOException {
+    public Product updateProduct(@RequestBody Product product) throws ProductNotFoundException {
         productService.saveProduct(product);
         return product;
     }
