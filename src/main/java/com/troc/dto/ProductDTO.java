@@ -12,5 +12,5 @@ public class ProductDTO {
     private Long id;
     private String name;
     private String description;
-    private Date dateOfAddition;
+//    private Date dateOfAddition;
 }

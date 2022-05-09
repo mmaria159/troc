@@ -3,6 +3,7 @@ package com.troc.service.impl;
 import com.troc.dto.UserDTO;
 import com.troc.entity.Contact;
 import com.troc.entity.Product;
+import com.troc.entity.Review;
 import com.troc.exceptions.UserNotFoundException;
 import com.troc.mapper.UserMapper;
 import com.troc.repository.UserRepository;
@@ -35,6 +36,14 @@ public class UserServiceImpl implements UserService {
         User userFromDb = findUserById(id);
         userFromDb.addProduct(product);
         productService.saveProduct(product);
+    }
+
+    @Override
+    @Transactional
+    public UserDTO addReviewToUser(Long id, Review review) {
+        User userFromDb = findUserById(id);
+        userFromDb.addReview(review);
+        return userMapper.userToUserDTO(userRepository.save(userFromDb));
     }
 
     @Override

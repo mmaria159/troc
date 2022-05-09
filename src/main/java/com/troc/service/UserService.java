@@ -3,6 +3,7 @@ package com.troc.service;
 import com.troc.dto.UserDTO;
 import com.troc.entity.Contact;
 import com.troc.entity.Product;
+import com.troc.entity.Review;
 import com.troc.entity.User;
 
 import java.util.List;
@@ -12,7 +13,9 @@ public interface UserService {
 
     UserDTO saveUser(User user);
 
-    void addProductToUser(Long userID, Product product);
+    UserDTO addProductToUser(Long userID, Product product);
+  
+    UserDTO addReviewToUser(Long userID, Review review);
 
     UserDTO addContactToUser(Long id, Contact contact);
 
@@ -21,5 +24,4 @@ public interface UserService {
     User findUserById(Long id);
 
     Long deleteUserById(Long id);
-
 }

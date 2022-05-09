@@ -15,9 +15,9 @@ public class Donation {
     private Integer id;
     private String name;
     private String description;
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.MERGE}, fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
-    private Category category;
+//    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.MERGE}, fetch = FetchType.LAZY)
+//    @JoinColumn(name = "category_id")
+//    private Category category;
 
     public Donation() {
     }
