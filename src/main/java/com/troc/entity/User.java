@@ -1,7 +1,6 @@
 package com.troc.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -23,6 +22,8 @@ import java.util.List;
         })
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,22 +31,18 @@ public class User {
 
     @Column(name = "first_name")
     private String firstName;
+    @Column(name = "last_name")
     private String lastName;
 
-    @NotBlank
-    @Size(max = 20)
     private String username;
 
-    @NotBlank
-    @Size(max = 120)
     private String password;
 
-//    @NotBlank
-//    @Size(max = 50)
     @Email
     private String email;
 
     private String gender;
+
     @Column(name = "date_of_birth")
     private Date dateOfBirth;
 
@@ -55,7 +52,7 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinColumn(name = "contact_id")
     private Contact contact;
 

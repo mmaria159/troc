@@ -1,7 +1,7 @@
 package com.troc.service.impl;
 
 import com.troc.dto.ProductDTO;
-import com.troc.entity.*;
+import com.troc.entity.Product;
 import com.troc.exceptions.ProductNotFoundException;
 import com.troc.exceptions.UserNotFoundException;
 import com.troc.mapper.ProductMapper;
@@ -10,10 +10,7 @@ import com.troc.service.ProductService;
 import org.springframework.data.domain.Sort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
-import java.util.Date;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
@@ -24,11 +21,13 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
 
     @Override
+    @Transactional
     public List<ProductDTO> findAllProducts() {
         return productMapper.productToProductDTO(productRepository.findAll());
     }
 
     @Override
+    @Transactional
     public List<ProductDTO> findAllProducts(String orderBy, Sort.Direction direction) {
         return productMapper
                 .productToProductDTO(productRepository
@@ -43,12 +42,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional
     public Product saveProduct(Product product) {
-
         return productRepository.save(product);
     }
-
+  
     @Override
+    @Transactional
     public void deleteProductById(Long id) {
         productRepository.deleteById(id);
     }

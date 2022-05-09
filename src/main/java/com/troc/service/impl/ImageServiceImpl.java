@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
@@ -17,6 +18,10 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public Image saveImage(Image image) {
         return imageRepository.save(image);
+    }
+
+    public List<Image> saveImage(List<Image> images) {
+        return imageRepository.saveAll(images);
     }
 
     public Image toImageEntity(MultipartFile file) throws IOException {

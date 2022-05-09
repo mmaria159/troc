@@ -19,7 +19,7 @@ public class Contact {
     private String email;
     private String facebook;
 
-    @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.DETACH, CascadeType.REFRESH,CascadeType.MERGE},fetch = FetchType.LAZY)
+    @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.DETACH, CascadeType.REFRESH,CascadeType.MERGE},fetch = FetchType.EAGER)
     @JoinColumn(name = "address_id")
     private Address address;
 

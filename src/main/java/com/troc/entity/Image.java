@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table(name="images")
+@Table(name = "images")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,6 +28,8 @@ public class Image {
     private boolean isPreviewImage;
     @Lob
     private byte[] bytes;
-    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
     private Product product;
 }
