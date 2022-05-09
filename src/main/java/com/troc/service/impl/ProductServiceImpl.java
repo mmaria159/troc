@@ -8,25 +8,20 @@ import com.troc.mapper.ProductMapper;
 import com.troc.repository.ProductRepository;
 import com.troc.service.ProductService;
 import org.springframework.data.domain.Sort;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
     private final ProductMapper productMapper;
-
     private final ProductRepository productRepository;
-
-    public ProductServiceImpl(ProductMapper productMapper, ProductRepository productRepository) {
-        this.productMapper = productMapper;
-        this.productRepository = productRepository;
-    }
 
     @Override
     public List<ProductDTO> findAllProducts() {
@@ -42,12 +37,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product findProduct(Long id) {
-        Optional<Product> product = productRepository.findById(id);
-        if (product.isEmpty()) {
-            throw new ProductNotFoundException("Product not found by id = " + id);
-        }
-        return product.get();
+    public ProductDTO findProduct(Long id) {
+        return productMapper.productToProductDTO(productRepository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException("Product not found by id: " + id)));
     }
 
     @Override
@@ -55,29 +47,6 @@ public class ProductServiceImpl implements ProductService {
 
         return productRepository.save(product);
     }
-
-//    public Product saveProduct(Product product, MultipartFile file1, MultipartFile file2, MultipartFile file3) throws ProductNotFoundException, IOException {
-//        Image image1;
-//        Image image2;
-//        Image image3;
-//        if (file1.getSize() != 0) {
-//            image1 = toImageEntity(file1);
-//            image1.setPreviewImage(true);
-//            product.addImageToProduct(image1);
-//        }
-//        if (file2.getSize() != 0) {
-//            image2 = toImageEntity(file2);
-//            product.addImageToProduct(image2);
-//        }
-//        if (file3.getSize() != 0) {
-//            image3 = toImageEntity(file3);
-//            product.addImageToProduct(image3);
-//        }
-//
-//        Product productFromDb = productRepository.save(product);
-//        productFromDb.setPreviewImageId(productFromDb.getImages().get(0).getId());
-//        return productRepository.save(product);
-//    }
 
     @Override
     public void deleteProductById(Long id) {
@@ -104,6 +73,4 @@ public class ProductServiceImpl implements ProductService {
                 .orElseThrow(() -> new ProductNotFoundException("Product not found by region name:" + id));
         return products;
     }
-
-
 }

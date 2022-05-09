@@ -14,6 +14,7 @@ public interface UserService {
     UserDTO saveUser(User user);
 
     UserDTO addProductToUser(Long userID, Product product);
+  
     UserDTO addReviewToUser(Long userID, Review review);
 
     UserDTO addContactToUser(Long id, Contact contact);
@@ -23,5 +24,4 @@ public interface UserService {
     User findUserById(Long id);
 
     Long deleteUserById(Long id);
-
 }

@@ -18,7 +18,10 @@ public interface ProductService {
     Product saveProduct(Product product);
 
     void deleteProductById(Long id);
+
     List<Product> findProductsByCategoryName(ECategory categoryName);
+  
     List<Product> findProductsByRegionName(ERegion region);
+  
     List<Product> findNewestProducts(Product id);
 }

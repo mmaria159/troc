@@ -61,11 +61,12 @@ public class UserController {
         return ResponseEntity.created(location).build();
 
     }
+
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @PostMapping("/{id}/addProduct")
     public ResponseEntity<UserDTO> addProductToUser(@PathVariable Long id, @RequestBody Product product) {
-        UserDTO savedUserDTO = userService.addProductToUser(id, product);
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(savedUserDTO.getId()).toUri();
+        userService.addProductToUser(id, product);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(id).toUri();
         return ResponseEntity.created(location).build();
     }
 

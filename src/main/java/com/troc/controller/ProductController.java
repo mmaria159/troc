@@ -57,7 +57,7 @@ public class ProductController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('USER')  or hasRole('ADMIN')")
-    public Product findProduct(@PathVariable Long id) {
+    public ProductDTO findProduct(@PathVariable Long id) {
         return productService.findProduct(id);
     }
 
@@ -74,9 +74,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public Long deleteProductById(@PathVariable Long id) {
+    public void deleteProductById(@PathVariable Long id) {
         productService.deleteProductById(id);
-        return id;
     }
-
 }

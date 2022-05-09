@@ -98,6 +98,5 @@ public class User {
         review.setUser(this);
         reviews.add(review);
     }
-
 }
 

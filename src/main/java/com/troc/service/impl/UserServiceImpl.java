@@ -9,6 +9,7 @@ import com.troc.mapper.UserMapper;
 import com.troc.repository.UserRepository;
 import com.troc.entity.User;
 import com.troc.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,14 +17,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final ProductServiceImpl productService;
     private final UserMapper userMapper;
-
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
-        this.userRepository = userRepository;
-        this.userMapper = userMapper;
-    }
 
     @Override
     @Transactional
@@ -34,10 +32,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UserDTO addProductToUser(Long id, Product product) {
+    public void addProductToUser(Long id, Product product) {
         User userFromDb = findUserById(id);
         userFromDb.addProduct(product);
-        return userMapper.userToUserDTO(userRepository.save(userFromDb));
+        productService.saveProduct(product);
     }
 
     @Override
@@ -62,11 +60,8 @@ public class UserServiceImpl implements UserService {
     }
 
     public User findUserById(Long id) {
-        Optional<User> user = userRepository.findById(id);
-        if (user.isEmpty()) {
-            throw new UserNotFoundException("User not found by id - " + id);
-        }
-        return user.get();
+        return userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User not found by id - " + id));
     }
 
     @Override

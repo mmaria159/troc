@@ -1,6 +1,8 @@
 package com.troc.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -27,15 +29,13 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Category category;
 
-
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.MERGE}, fetch = FetchType.EAGER)
+
     @JoinColumn(name = "region_id")
     private Region region;
 
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,
-//            mappedBy = "product")
-//    private List<Image> images = new ArrayList<>();
-//    private Long previewImageId;
+    @JsonFormat(pattern="yyyy-MM-dd")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     private LocalDateTime dateOfCreated;
 
     @PrePersist
@@ -43,12 +43,8 @@ public class Product {
         dateOfCreated = LocalDateTime.now();
     }
 
-
-
 //    public void addImageToProduct(Image image) {
 //        image.setProduct(this);
 //        images.add(image);
 //    }
-
-
 }
