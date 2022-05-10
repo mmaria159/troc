@@ -1,45 +1,34 @@
 package com.troc.mapper;
 
 import com.troc.dto.UserDTO;
-import com.troc.entity.Image;
-import com.troc.entity.Product;
 import com.troc.entity.User;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
+@RequiredArgsConstructor
 public class UserMapper {
 
-    public UserDTO userToUserDTO(User user) {
-        UserDTO userDTO = new UserDTO();
+    private final ContactMapper contactMapper;
+    private final ProductMapper productMapper;
 
-        List<Product> userProducts = new ArrayList<>();
-
-        userDTO.setId(user.getId());
-        userDTO.setFirstName(user.getFirstName());
-        userDTO.setLastName(user.getLastName());
-        userDTO.setGender(user.getGender());
-        userDTO.setDateOfBirth(user.getDateOfBirth());
-        if (user.getContact() != null)
-            userDTO.setContactId(user.getContact().getId());
-        for (Product product : user.getProducts()) {
-            product.setUser(null);
-            for (Image image : product.getImages()) {
-                image.setProduct(null);
-            }
-            userProducts.add(product);
-        }
-        userDTO.setProducts(userProducts);
-
-        return userDTO;
+    public UserDTO mapToUserDTO(User user) {
+        return UserDTO.builder()
+                .id(user.getId())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .gender(user.getGender()).dateOfBirth(user.getDateOfBirth())
+                .contactDTO(contactMapper.mapToContactDTO(user.getContact()))
+                .products(productMapper.mapToProductDTO(user.getProducts()))
+                .build();
     }
 
-    public List<UserDTO> userToUserDTO(List<User> users) {
-        return users.stream().map(this::userToUserDTO).collect(Collectors.toList());
+    public List<UserDTO> mapToUserDTO(List<User> users) {
+        return users.stream().map(this::mapToUserDTO).collect(Collectors.toList());
     }
 
     public User userDTOToUser(UserDTO userDTO) {

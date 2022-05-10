@@ -1,5 +1,6 @@
 package com.troc.controller;
 
+import com.troc.dto.ProductDTO;
 import com.troc.dto.UserDTO;
 import com.troc.entity.Contact;
 import com.troc.entity.Product;
@@ -80,7 +81,7 @@ public class UserController {
 
     @GetMapping("/{id}/products")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public ResponseEntity<List<Product>> getUserProducts(@PathVariable Long id) {
+    public ResponseEntity<List<ProductDTO>> getUserProducts(@PathVariable Long id) {
         return new ResponseEntity<>(userService.findUserDTOById(id).getProducts(), HttpStatus.OK);
     }
 }

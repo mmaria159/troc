@@ -6,17 +6,15 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class AddressMapper {
-    public AddressDTO contactToContactDTO(Address address) {
-        AddressDTO addressDTO = new AddressDTO();
-
-        addressDTO.setId(address.getId());
-        addressDTO.setCountry(address.getCountry());
-        addressDTO.setTown(address.getTown());
-        addressDTO.setVillage(address.getVillage());
-        addressDTO.setPostalCode(address.getPostalCode());
-        addressDTO.setStreetName(address.getStreetName());
-        addressDTO.setStreetNumber(address.getStreetNumber());
-
-        return addressDTO;
+    public AddressDTO mapToAddressDto(Address address) {
+        return AddressDTO.builder()
+                .id(address.getId())
+                .country(address.getCountry())
+                .town(address.getTown())
+                .village(address.getVillage())
+                .postalCode(address.getPostalCode())
+                .streetName(address.getStreetName())
+                .streetNumber(address.getStreetNumber())
+                .build();
     }
 }

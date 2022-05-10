@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserDTO saveUser(User user) {
         User savedUser = userRepository.save(user);
-        return userMapper.userToUserDTO(savedUser);
+        return userMapper.mapToUserDTO(savedUser);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
     public UserDTO addReviewToUser(Long id, Review review) {
         User userFromDb = findUserById(id);
         userFromDb.addReview(review);
-        return userMapper.userToUserDTO(userRepository.save(userFromDb));
+        return userMapper.mapToUserDTO(userRepository.save(userFromDb));
     }
 
     @Override
@@ -49,12 +49,12 @@ public class UserServiceImpl implements UserService {
     public UserDTO addContactToUser(Long id, Contact contact) {
         User userFromDb = findUserById(id);
         userFromDb.setContact(contact);
-        return userMapper.userToUserDTO(userRepository.save(userFromDb));
+        return userMapper.mapToUserDTO(userRepository.save(userFromDb));
     }
 
     @Override
     public List<UserDTO> findAllUsers() {
-        return userMapper.userToUserDTO(userRepository.findAll());
+        return userMapper.mapToUserDTO(userRepository.findAll());
     }
 
     public User findUserById(Long id) {
@@ -63,10 +63,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public UserDTO findUserDTOById(Long id) {
         User user = userRepository.findUserDetailsById(id)
                 .orElseThrow(() -> new UserNotFoundException("User not found by id:" + id));
-        return userMapper.userToUserDTO(user);
+        return userMapper.mapToUserDTO(user);
     }
 
     @Override
