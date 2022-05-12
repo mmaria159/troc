@@ -1,6 +1,5 @@
 package com.troc.dto;
 
-import com.troc.entity.Product;
 import lombok.*;
 import java.util.Date;
 import java.util.List;
@@ -16,6 +15,6 @@ public class UserDTO {
     private String lastName;
     private String gender;
     private Date dateOfBirth;
-    private Long contactId;
-    private List<Product> products;
+    private ContactDTO contactDTO;
+    private List<ProductDTO> products;
 }

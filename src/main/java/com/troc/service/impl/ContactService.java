@@ -1,7 +1,6 @@
 package com.troc.service.impl;
 
 import com.troc.dto.ContactDTO;
-import com.troc.entity.Address;
 import com.troc.entity.Contact;
 import com.troc.exceptions.ProductNotFoundException;
 import com.troc.mapper.ContactMapper;
@@ -25,6 +24,6 @@ public class ContactService {
     public ContactDTO findContact(Long id) {
         Contact contact = contactRepository.findById(id)
                 .orElseThrow(() -> new ProductNotFoundException("Contact not found by id = " + id));
-        return contactMapper.contactToContactDTO(contact);
+        return contactMapper.mapToContactDTO(contact);
     }
 }

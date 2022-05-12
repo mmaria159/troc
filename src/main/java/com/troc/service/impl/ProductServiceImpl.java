@@ -5,7 +5,6 @@ import com.troc.entity.ECategory;
 import com.troc.entity.ERegion;
 import com.troc.entity.Product;
 import com.troc.exceptions.ProductNotFoundException;
-import com.troc.exceptions.UserNotFoundException;
 import com.troc.mapper.ProductMapper;
 import com.troc.repository.ProductRepository;
 import com.troc.service.ProductService;
@@ -25,22 +24,28 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public List<ProductDTO> findAllProducts() {
-        return productMapper.productToProductDTO(productRepository.findAll());
+        return productMapper.mapToProductDTO(productRepository.findAll());
     }
 
     @Override
     @Transactional
     public List<ProductDTO> findAllProducts(String orderBy, Sort.Direction direction) {
         return productMapper
-                .productToProductDTO(productRepository
+                .mapToProductDTO(productRepository
                         .findAllSortingProducts(Sort.by(direction, orderBy))
                         .orElseThrow(()-> new ProductNotFoundException("ERROR")));
     }
 
     @Override
     public ProductDTO findProduct(Long id) {
-        return productMapper.productToProductDTO(productRepository.findById(id)
+        return productMapper.mapToProductDTO(productRepository.findById(id)
                 .orElseThrow(() -> new ProductNotFoundException("Product not found by id: " + id)));
+    }
+
+    @Override
+    public Product findProductById(Long id) {
+        return productRepository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException("Product not found by id: " + id));
     }
 
     @Override
@@ -57,22 +62,19 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> findProductsByCategoryName(ECategory category) {
-        List<Product> products = productRepository.findProductsByCategory(category)
+        return productRepository.findProductsByCategory(category)
                 .orElseThrow(() -> new ProductNotFoundException("Product not found by category name:" + category));
-        return products;
     }
 
     @Override
     public List<Product> findProductsByRegionName(ERegion region) {
-        List<Product> products = productRepository.findProductsByRegion(region)
+        return productRepository.findProductsByRegion(region)
                 .orElseThrow(() -> new ProductNotFoundException("Product not found by region name:" + region));
-        return products;
     }
 
     @Override
     public List<Product> findNewestProducts(Product id) {
-        List<Product> products = productRepository.findNewestProducts(id)
+        return productRepository.findNewestProducts(id)
                 .orElseThrow(() -> new ProductNotFoundException("Product not found by region name:" + id));
-        return products;
     }
 }

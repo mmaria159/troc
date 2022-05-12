@@ -71,5 +71,10 @@ public class User {
         review.setUser(this);
         reviews.add(review);
     }
+
+    public Long getIdOfLastAddedProduct(){
+        if (this.products == null || this.products.size() == 0) return null;
+        return this.products.get(products.size() - 1).getId();
+    }
 }
 

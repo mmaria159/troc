@@ -24,4 +24,6 @@ public interface ProductService {
     List<Product> findProductsByRegionName(ERegion region);
   
     List<Product> findNewestProducts(Product id);
+
+    Product findProductById(Long id);
 }

@@ -1,6 +1,7 @@
 package com.troc.controller;
 
 import com.troc.entity.Image;
+import com.troc.exceptions.ImageNotFoundException;
 import com.troc.repository.ImageRepository;
 import com.troc.service.impl.ImageServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,8 @@ public class ImageController {
 
     @GetMapping("/{id}")
     private ResponseEntity<?> getImageById(@PathVariable Long id) {
-        Image image = imageRepository.findById(id).orElse(null);
+        Image image = imageRepository.findById(id)
+                .orElseThrow(()-> new ImageNotFoundException("Image not found by id: " + id));
         return ResponseEntity.ok()
                 .header("fileName", image.getOriginalFileName())
                 .contentType(MediaType.valueOf(image.getContentType()))
@@ -33,14 +35,14 @@ public class ImageController {
                 .body(new InputStreamResource(new ByteArrayInputStream(image.getBytes())));
     }
 
-    @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<List<Image>> saveImage(@RequestPart("files") List<MultipartFile> files) throws IOException {
+    @PostMapping(path = "/{productId}",consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<List<Image>> saveImage(@RequestPart("files") List<MultipartFile> files, @PathVariable("productId") Long productId) throws IOException {
         List<Image> images = new ArrayList<>();
         for (MultipartFile file : files) {
             if (file.getSize() != 0) {
                 images.add(imageService.toImageEntity(file));
             }
         }
-        return new ResponseEntity<>(imageService.saveImage(images), HttpStatus.OK);
+        return new ResponseEntity<>(imageService.saveImage(images, productId), HttpStatus.OK);
     }
 }

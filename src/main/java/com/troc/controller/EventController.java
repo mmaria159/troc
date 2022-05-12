@@ -2,6 +2,7 @@ package com.troc.controller;
 
 import com.troc.entity.Event;
 import com.troc.service.EventService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -11,12 +12,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/events")
+@RequiredArgsConstructor
 public class EventController {
     private final EventService eventService;
-
-    public EventController(EventService eventService) {
-        this.eventService = eventService;
-    }
 
     @GetMapping
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
