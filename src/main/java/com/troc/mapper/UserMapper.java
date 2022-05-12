@@ -1,6 +1,9 @@
 package com.troc.mapper;
 
+import com.troc.dto.ContactDTO;
+import com.troc.dto.ProductDTO;
 import com.troc.dto.UserDTO;
+import com.troc.entity.Product;
 import com.troc.entity.User;
 
 import lombok.RequiredArgsConstructor;
@@ -17,13 +20,17 @@ public class UserMapper {
     private final ProductMapper productMapper;
 
     public UserDTO mapToUserDTO(User user) {
+        ContactDTO contactDTO = contactMapper.mapToContactDTO(user.getContact());
+        List<ProductDTO> products = productMapper.mapToProductDTO(user.getProducts());
+        System.out.println(contactDTO);
         return UserDTO.builder()
                 .id(user.getId())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
-                .gender(user.getGender()).dateOfBirth(user.getDateOfBirth())
-                .contactDTO(contactMapper.mapToContactDTO(user.getContact()))
-                .products(productMapper.mapToProductDTO(user.getProducts()))
+                .gender(user.getGender())
+                .dateOfBirth(user.getDateOfBirth())
+                .contactDTO(contactDTO)
+                .products(products)
                 .build();
     }
 

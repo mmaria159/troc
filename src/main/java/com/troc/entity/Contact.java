@@ -22,6 +22,4 @@ public class Contact {
     @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.DETACH, CascadeType.REFRESH,CascadeType.MERGE},fetch = FetchType.EAGER)
     @JoinColumn(name = "address_id")
     private Address address;
-
-
 }

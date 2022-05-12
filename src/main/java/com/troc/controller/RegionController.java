@@ -1,8 +1,8 @@
 package com.troc.controller;
 
-import com.troc.entity.Category;
 import com.troc.entity.Region;
 import com.troc.service.RegionService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,12 +14,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/regions")
+@RequiredArgsConstructor
 public class RegionController {
     private final RegionService regionService;
-
-    public RegionController(RegionService regionService) {
-        this.regionService = regionService;
-    }
 
     @GetMapping
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")

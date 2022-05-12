@@ -1,10 +1,7 @@
 package com.troc.controller;
 
 import com.troc.dto.ContactDTO;
-import com.troc.dto.UserDTO;
-import com.troc.entity.Contact;
 import com.troc.service.UserService;
-import com.troc.service.impl.ContactService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,19 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ContactController {
 
-    // TODO: TO BE DELETED
-
-    private final ContactService contactService;
     private final UserService userService;
 
-//    @GetMapping("/{userId}")
-//    @PreAuthorize("hasRole('USER')  or hasRole('ADMIN')")
-//    public ResponseEntity<ContactDTO> findContactByUserId(@PathVariable("userId") Long id) {
-//        Long contactId = userService.findUserDTOById(id);
-//        ContactDTO contact = new ContactDTO();
-//        if (contactId != null) {
-//            contact = contactService.findContact(contactId);
-//        }
-//        return new ResponseEntity<>(contact, HttpStatus.OK);
-//    }
+    @GetMapping("/{userId}")
+    @PreAuthorize("hasRole('USER')  or hasRole('ADMIN')")
+    public ResponseEntity<ContactDTO> findContactByUserId(@PathVariable("userId") Long id) {
+        ContactDTO contact = userService.getUserContacts(id);
+        return new ResponseEntity<>(contact, HttpStatus.OK);
+    }
 }

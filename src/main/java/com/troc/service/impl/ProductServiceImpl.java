@@ -43,6 +43,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public Product findProductById(Long id) {
+        return productRepository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException("Product not found by id: " + id));
+    }
+
+    @Override
     @Transactional
     public Product saveProduct(Product product) {
         return productRepository.save(product);
@@ -56,22 +62,19 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> findProductsByCategoryName(ECategory category) {
-        List<Product> products = productRepository.findProductsByCategory(category)
+        return productRepository.findProductsByCategory(category)
                 .orElseThrow(() -> new ProductNotFoundException("Product not found by category name:" + category));
-        return products;
     }
 
     @Override
     public List<Product> findProductsByRegionName(ERegion region) {
-        List<Product> products = productRepository.findProductsByRegion(region)
+        return productRepository.findProductsByRegion(region)
                 .orElseThrow(() -> new ProductNotFoundException("Product not found by region name:" + region));
-        return products;
     }
 
     @Override
     public List<Product> findNewestProducts(Product id) {
-        List<Product> products = productRepository.findNewestProducts(id)
+        return productRepository.findNewestProducts(id)
                 .orElseThrow(() -> new ProductNotFoundException("Product not found by region name:" + id));
-        return products;
     }
 }
