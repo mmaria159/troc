@@ -36,13 +36,13 @@ public class ProductController {
 
     @GetMapping("/category")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public ResponseEntity<List<Product>> findProductsByCategoryName(@RequestParam("category") ECategory category) {
+    public ResponseEntity<List<ProductDTO>> findProductsByCategoryName(@RequestParam("category") ECategory category) {
         return new ResponseEntity<>(productService.findProductsByCategoryName(category), HttpStatus.OK);
     }
 
     @GetMapping("/region")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public ResponseEntity<List<Product>> findProductsByRegionName(@RequestParam("region") ERegion region) {
+    public ResponseEntity<List<ProductDTO>> findProductsByRegionName(@RequestParam("region") ERegion region) {
         return new ResponseEntity<>(productService.findProductsByRegionName(region), HttpStatus.OK);
     }
 

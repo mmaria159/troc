@@ -12,7 +12,9 @@ import org.springframework.data.domain.Sort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -33,7 +35,7 @@ public class ProductServiceImpl implements ProductService {
         return productMapper
                 .mapToProductDTO(productRepository
                         .findAllSortingProducts(Sort.by(direction, orderBy))
-                        .orElseThrow(()-> new ProductNotFoundException("ERROR")));
+                        .orElseThrow(() -> new ProductNotFoundException("ERROR")));
     }
 
     @Override
@@ -53,24 +55,39 @@ public class ProductServiceImpl implements ProductService {
     public Product saveProduct(Product product) {
         return productRepository.save(product);
     }
-  
+
     @Override
     @Transactional
     public void deleteProductById(Long id) {
         productRepository.deleteById(id);
     }
 
+//    @Override
+//    public List<ProductDTO> findProductsByCategoryName(ECategory category) {
+//        return productMapper
+//                .mapToProductDTO(productRepository.findProductsByCategory(category)
+//                        .orElseThrow(() -> new ProductNotFoundException("Product not found by category name:" + category)));
+//    }
+
+//    @Override
+//    public List<ProductDTO> findProductsByRegionName(ERegion region) {
+//        return productMapper
+//                .mapToProductDTO(productRepository.findProductsByRegion(region)
+//                        .orElseThrow(() -> new ProductNotFoundException("Product not found by region name:" + region)));
+//    }
+
     @Override
-    public List<Product> findProductsByCategoryName(ECategory category) {
-        return productRepository.findProductsByCategory(category)
-                .orElseThrow(() -> new ProductNotFoundException("Product not found by category name:" + category));
+    public List<ProductDTO> findProductsByCategoryName(ECategory category) {
+        List<Product> products = productRepository.findAll().stream().filter(product -> product.getCategory().getName() == category).collect(Collectors.toList());
+        return productMapper.mapToProductDTO(products);
     }
 
     @Override
-    public List<Product> findProductsByRegionName(ERegion region) {
-        return productRepository.findProductsByRegion(region)
-                .orElseThrow(() -> new ProductNotFoundException("Product not found by region name:" + region));
+    public List<ProductDTO> findProductsByRegionName(ERegion region) {
+        List<Product> products = productRepository.findAll().stream().filter(product -> product.getRegion().getName() == region).collect(Collectors.toList());
+        return productMapper.mapToProductDTO(products);
     }
+
 
     @Override
     public List<Product> findNewestProducts(Product id) {

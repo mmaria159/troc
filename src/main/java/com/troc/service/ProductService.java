@@ -19,9 +19,9 @@ public interface ProductService {
 
     void deleteProductById(Long id);
 
-    List<Product> findProductsByCategoryName(ECategory categoryName);
-  
-    List<Product> findProductsByRegionName(ERegion region);
+    List<ProductDTO> findProductsByCategoryName(ECategory categoryName);
+
+    List<ProductDTO> findProductsByRegionName(ERegion region);
   
     List<Product> findNewestProducts(Product id);
 
