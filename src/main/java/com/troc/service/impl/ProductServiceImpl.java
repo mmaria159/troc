@@ -13,7 +13,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @Service
@@ -78,16 +80,25 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductDTO> findProductsByCategoryName(ECategory category) {
-        List<Product> products = productRepository.findAll().stream().filter(product -> product.getCategory().getName() == category).collect(Collectors.toList());
+        List<Product> products = productRepository.findAll()
+                .stream().filter(product -> product.getCategory().getName() == category).collect(Collectors.toList());
         return productMapper.mapToProductDTO(products);
     }
 
     @Override
     public List<ProductDTO> findProductsByRegionName(ERegion region) {
-        List<Product> products = productRepository.findAll().stream().filter(product -> product.getRegion().getName() == region).collect(Collectors.toList());
+        List<Product> products = productRepository.findAll()
+                .stream().filter(product -> product.getRegion().getName() == region).collect(Collectors.toList());
         return productMapper.mapToProductDTO(products);
     }
 
+    @Override
+    public List<ProductDTO> findByNameContaining(String name) {
+        List<Product> products = productRepository.findAll()
+                .stream().filter(product -> (product.getName().toLowerCase(Locale.ROOT))
+                        .contains(name.toLowerCase(Locale.ROOT))).collect(Collectors.toList());
+        return productMapper.mapToProductDTO(products);
+    }
 
     @Override
     public List<Product> findNewestProducts(Product id) {

@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -73,5 +74,9 @@ public class ProductController {
     @DeleteMapping("/{id}")
     public void deleteProductById(@PathVariable Long id) {
         productService.deleteProductById(id);
+    }
+    @GetMapping("/search")
+    public List<ProductDTO> findByNameContaining(@RequestParam("name") String name) {
+        return productService.findByNameContaining(name);
     }
 }

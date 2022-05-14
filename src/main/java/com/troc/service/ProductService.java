@@ -7,6 +7,7 @@ import com.troc.entity.Product;
 import org.springframework.data.domain.Sort;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ProductService {
     List<ProductDTO> findAllProducts();
@@ -26,4 +27,6 @@ public interface ProductService {
     List<Product> findNewestProducts(Product id);
 
     Product findProductById(Long id);
+
+    List<ProductDTO> findByNameContaining(String name);
 }
