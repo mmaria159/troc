@@ -23,6 +23,7 @@ public class ProductMapper {
                 .description(product.getDescription())
                 .name(product.getName())
                 .dateOfCreated(product.getDateOfCreated())
+                .moreInformation(product.getMoreInformation())
                 .category(product.getCategory())
                 .region(product.getRegion())
                 .images(images)

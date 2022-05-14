@@ -21,6 +21,7 @@ public class ProductDTO {
     private String name;
 
     private String description;
+    private String moreInformation;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
