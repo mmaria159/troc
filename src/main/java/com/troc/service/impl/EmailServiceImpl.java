@@ -26,52 +26,32 @@ public class EmailServiceImpl implements EmailService {
         this.javaMailSender = javaMailSender;
     }
 
-    // Method 1
-    // To send a simple email
     public void sendSimpleMail(Email email) {
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
 
-        // Creating a simple mail message
-        SimpleMailMessage mailMessage
-                = new SimpleMailMessage();
-
-        // Setting up necessary details
         mailMessage.setFrom(sender);
         mailMessage.setTo(email.getRecipient());
         mailMessage.setText(email.getMsgBody());
         mailMessage.setSubject(email.getSubject());
 
-        // Sending the mail
         javaMailSender.send(mailMessage);
     }
 
-    // Method 2
-    // To send an email with attachment
     public void sendMailWithAttachment(Email email) throws MessagingException {
-        // Creating a mime message
-        MimeMessage mimeMessage
-                = javaMailSender.createMimeMessage();
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper;
 
-            // Setting multipart as true for attachments to
-            // be send
-            mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
-            mimeMessageHelper.setFrom(sender);
-            mimeMessageHelper.setTo(email.getRecipient());
-            mimeMessageHelper.setText(email.getMsgBody());
-            mimeMessageHelper.setSubject(
-                    email.getSubject());
+        mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
+        mimeMessageHelper.setFrom(sender);
+        mimeMessageHelper.setTo(email.getRecipient());
+        mimeMessageHelper.setText(email.getMsgBody());
+        mimeMessageHelper.setSubject(
+                email.getSubject());
 
-            // Adding the attachment
-            FileSystemResource file
-                    = new FileSystemResource(
-                    new File(email.getAttachment()));
+        FileSystemResource file = new FileSystemResource(new File(email.getAttachment()));
+        mimeMessageHelper.addAttachment(file.getFilename(), file);
 
-            mimeMessageHelper.addAttachment(
-                    file.getFilename(), file);
-
-            // Sending the mail
-            javaMailSender.send(mimeMessage);
-
+        javaMailSender.send(mimeMessage);
     }
 }
 
