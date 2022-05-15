@@ -8,7 +8,6 @@ import com.troc.entity.Review;
 import com.troc.entity.User;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface UserService {
     List<UserDTO> findAllUsers();
@@ -28,4 +27,6 @@ public interface UserService {
     Long deleteUserById(Long id);
 
     ContactDTO getUserContacts(Long id);
+
+    UserDTO findUserByProductId(Long id);
 }

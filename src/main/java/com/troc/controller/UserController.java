@@ -6,6 +6,8 @@ import com.troc.entity.Contact;
 import com.troc.entity.Product;
 import com.troc.entity.Review;
 import com.troc.entity.User;
+import com.troc.repository.ProductRepository;
+import com.troc.repository.UserRepository;
 import com.troc.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,6 +27,7 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final UserRepository userRepository;
 
     @GetMapping
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
@@ -82,5 +86,11 @@ public class UserController {
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public ResponseEntity<List<ProductDTO>> getUserProducts(@PathVariable Long id) {
         return new ResponseEntity<>(userService.findUserDTOById(id).getProducts(), HttpStatus.OK);
+    }
+
+    @GetMapping("/user/{productId}")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public ResponseEntity<UserDTO> getUserByProductId(@PathVariable Long productId) {
+        return new ResponseEntity<>(userService.findUserByProductId(productId), HttpStatus.OK);
     }
 }

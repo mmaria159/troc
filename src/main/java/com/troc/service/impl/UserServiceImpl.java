@@ -87,4 +87,11 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.getById(id);
         return contactMapper.mapToContactDTO(user.getContact());
     }
+
+    @Override
+    @Transactional
+    public UserDTO findUserByProductId(Long id) {
+        return userMapper.mapToUserDTO(userRepository.findUserByProductId(id)
+                .orElseThrow(()-> new UserNotFoundException("User not found by product id: " + id)));
+    }
 }
